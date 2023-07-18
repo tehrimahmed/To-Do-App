@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
 function LoginPage({ onLogin }) {
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -15,12 +15,15 @@ function LoginPage({ onLogin }) {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (username === 'username' && password === 'password') {
+    if (username === 'user' && password === '12345678') {
+      setLoggedIn(true);
       onLogin();
-    } else {
-      setError('Invalid username or password');
     }
   };
+
+  if (isLoggedIn) {
+    return null; 
+  }
 
   return (
     <div className="login-page">
@@ -28,16 +31,17 @@ function LoginPage({ onLogin }) {
       <form className="login-form" onSubmit={handleLogin}>
         <input
           type="text"
+          placeholder="Username"
           value={username}
           onChange={handleUsernameChange}
         />
         <input
           type="password"
+          placeholder="Password"
           value={password}
           onChange={handlePasswordChange}
         />
         <button type="submit">Login</button>
-        {error && <p className="error">{error}</p>}
       </form>
     </div>
   );

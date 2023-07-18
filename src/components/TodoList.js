@@ -1,67 +1,52 @@
 import React, { useState } from 'react';
 
-function TodoList({ todos, toggleTodo, deleteTodo, updateTodo }) {
-  const [editValue, setEditValue] = useState('');
-  const [editId, setEditId] = useState(null);
+function TodoList({ todos, updateTodo, deleteTodo }) {
+  const [editedTodoId, setEditedTodoId] = useState(null);
+  const [editedTodoValue, setEditedTodoValue] = useState('');
 
-  const handleEditInputChange = (e) => {
-    setEditValue(e.target.value);
+  const handleEditClick = (todo) => {
+    setEditedTodoId(todo.id);
+    setEditedTodoValue(todo.title);
   };
 
-  const handleEditFormSubmit = (e, id) => {
-    e.preventDefault();
-    if (editValue.trim() !== '') {
-      updateTodo({
-        id,
-        text: editValue,
-      });
-      setEditValue('');
-      setEditId(null);
+  const handleSaveClick = () => {
+    if (editedTodoId && editedTodoValue.trim() !== '') {
+      const updatedTodo = { id: editedTodoId, title: editedTodoValue };
+      updateTodo && updateTodo(updatedTodo);
+      setEditedTodoId(null);
+      setEditedTodoValue('');
     }
   };
 
+  const handleCancelClick = () => {
+    setEditedTodoId(null);
+    setEditedTodoValue('');
+  };
+
+  const handleInputChange = (e) => {
+    setEditedTodoValue(e.target.value);
+  };
+
   return (
-    <ul className="TodoList">
+    <div>
       {todos.map((todo) => (
-        <li
-          key={todo.id}
-          className={`Todo ${todo.completed ? 'completed' : ''}`}
-          onClick={() => toggleTodo(todo.id)}
-        >
-          {editId === todo.id ? (
-            <form onSubmit={(e) => handleEditFormSubmit(e, todo.id)}>
-              <input
-                type="text"
-                className="edit-input"
-                value={editValue}
-                onChange={handleEditInputChange}
-              />
-              <button type="submit" className="save-button">
-                Save
-              </button>
-            </form>
+        <div key={todo.id}>
+          {editedTodoId === todo.id ? (
+            <>
+              <input type="text" value={editedTodoValue} onChange={handleInputChange} />
+              <button onClick={handleSaveClick}>Save</button>
+              <button onClick={handleCancelClick}>Cancel</button>
+            </>
           ) : (
-            <span className="todo-text">{todo.text}</span>
+            <>
+              <span>{todo.title}</span>
+              <button onClick={() => handleEditClick(todo)}>Edit</button>
+              <button onClick={() => deleteTodo && deleteTodo(todo.id)}>Delete</button>
+            </>
           )}
-          <div className="actions">
-            {editId !== todo.id && (
-              <button
-                className="edit-button"
-                onClick={() => {
-                  setEditValue(todo.text);
-                  setEditId(todo.id);
-                }}
-              >
-              Edit
-              </button>
-            )}
-              <button className="delete-button" onClick={() => deleteTodo(todo.id)}>
-              Delete
-              </button>
-          </div>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
 

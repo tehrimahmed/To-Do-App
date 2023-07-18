@@ -14,18 +14,17 @@ function TodoForm({ addTodo }) {
       setInputValue('');
     }
   };
-  
+
   return (
-    <form className="TodoForm" onSubmit={handleFormSubmit}>
+    <form onSubmit={handleFormSubmit}>
       <input
         type="text"
-        className="input"
         value={inputValue}
         onChange={handleInputChange}
       />
-      <button type="submit" className="todo-btn">
-        Add
-      </button>
+      <button className="todo-btn" onClick={handleFormSubmit}>
+            Add 
+          </button>
     </form>
   );
 }

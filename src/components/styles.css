@@ -25,7 +25,7 @@ h1 {
 }
 
 .TodoWrapper {
-  background: #ffffff;
+  background: #ebeef9;
   margin-top: 5rem;
   padding: 2rem;
   border-radius: 5px;
@@ -52,34 +52,40 @@ h1 {
   color: #999;
 }
 
-.todo-btn {
+.todo-btn,
+.search-button {
   background: #8758ff;
   color: #fff;
   border: none;
-  padding: 0.55rem;
+  padding: 0.5rem;
   cursor: pointer;
   border-radius: 4px;
-}
-
-.TodoList {
-  list-style-type: none;
-  padding: 0;
+  margin: 0.5rem;
 }
 
 .Todo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #8758ff;
+  background: #e6d4f9;
   color: #fff;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
+  padding: 1rem;
+  border-radius: 10px;
   margin-bottom: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Todo:hover {
+  background: #8758ff;
 }
 
 .fa-trash {
-  margin-left: 0.75rem;
+  margin-left: 1.5rem;
+}
+
+.fa-edit {
+  margin-right: 1rem;
 }
 
 .completed {

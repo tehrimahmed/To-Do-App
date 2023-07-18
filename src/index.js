@@ -11,9 +11,13 @@ function App() {
     setLoggedIn(true);
   };
 
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
   return (
     <div className="App">
-      {!isLoggedIn ? <LoginPage onLogin={handleLogin} /> : <TodoApp />}
+      {!isLoggedIn ? <LoginPage onLogin={handleLogin} /> : <TodoApp onLogout={handleLogout} />}
     </div>
   );
 }
